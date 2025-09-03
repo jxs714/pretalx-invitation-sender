@@ -11,7 +11,6 @@
         <a href="{{ request.event.orga_urls.outbox }}">outbox</a> for you to review before sending.
         {% endblocktranslate %}
     </p>
-
     <form method="post">
         {% csrf_token %}
         {% bootstrap_form form layout='horizontal' %}
