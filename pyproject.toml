@@ -19,4 +19,4 @@ classifiers = [
 ]
 
 [project.entry-points."pretalx.plugin"]
-pretalx_invitation_sender = "pretalx_invitation_sender.apps:PretalxPluginMeta"
+pretalx_invitation_sender = "pretalx_invitation_sender.apps:InvitationSenderApp"
