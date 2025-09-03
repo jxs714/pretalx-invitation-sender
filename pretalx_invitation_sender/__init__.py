@@ -1,10 +1,1 @@
-[project]
-name = "pretalx-invitation-sender"
-version = "0.1.0"
-description = "Pretalx plugin to send invitation emails to multiple addresses"
-authors = [{name = "Your Name", email = "your@email.com"}]
-license = "Apache-2.0"
-dependencies = ["pretalx >= 2024.0.0"]  # Adjust if your Pretalx version is different
-
-[project.entry-points."pretalx.plugin"]
-pretalx_invitation_sender = "pretalx_invitation_sender.apps:InvitationSenderConfig"
+# This file is empty but required for Python to recognize this as a package.
