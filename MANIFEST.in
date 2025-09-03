@@ -1,1 +1,1 @@
-MANIFEST
+recursive-include pretalx_invitation_sender/templates *
