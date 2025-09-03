@@ -1,10 +1,22 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
 [project]
 name = "pretalx-invitation-sender"
 version = "0.1.0"
-description = "Pretalx plugin to send invitation emails to multiple addresses"
-authors = [{name = "Your Name", email = "your@email.com"}]
-license = "Apache-2.0"
-dependencies = ["pretalx >= 2024.0.0"]  # Adjust if your Pretalx version is different
+authors = [
+    { name="Your Name", email="your@email.com" },
+]
+description = "A plugin to send talk submission invitations to external users."
+readme = "README.md"
+requires-python = ">=3.7"
+license = { text = "Apache-2.0" }
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Framework :: Django",
+    "Intended Audience :: Developers",
+]
 
 [project.entry-points."pretalx.plugin"]
 pretalx_invitation_sender = "pretalx_invitation_sender:PretalxPluginMeta"
