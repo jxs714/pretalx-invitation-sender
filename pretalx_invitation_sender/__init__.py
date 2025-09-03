@@ -1,11 +1,6 @@
 from django.apps import AppConfig
 from django.utils.translation import gettext_lazy as _
 
-try:
-    from pretalx import __version__ as pretalx_version
-except ImportError:
-    pretalx_version = "0.0.0"
-
 from .__version__ import __version__
 
 
