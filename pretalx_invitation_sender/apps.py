@@ -11,7 +11,7 @@ class InvitationSenderConfig(AppConfig):
         version = "0.1.0"
         visible = True
         description = _("Allows sending invite emails to multiple addresses using existing templates.")
-        category = "ADMIN"
+        category = "CUSTOMIZATION"
 
     def ready(self):
         from . import signals  # NOQA
