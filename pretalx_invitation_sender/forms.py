@@ -1,26 +1,35 @@
 from django import forms
+from django.utils.translation import gettext_lazy as _
 
-class InviteForm(forms.Form):
-    template = forms.ChoiceField(
+from pretalx.mail.models import MailTemplate
+
+
+class InvitationForm(forms.Form):
+    # Field for TO addresses
+    to_recipients = forms.CharField(
+        label=_("To"),
+        widget=forms.Textarea(attrs={"rows": 3}),
+        help_text=_("Enter email addresses, one per line."),
+        required=True,
+    )
+
+    # Field for BCC addresses
+    bcc_recipients = forms.CharField(
+        label=_("BCC"),
+        widget=forms.Textarea(attrs={"rows": 3}),
+        help_text=_("Enter email addresses, one per line."),
+        required=False,
+    )
+
+    # Dropdown to select an email template
+    template = forms.ModelChoiceField(
         label=_("Email Template"),
-        choices=[],
-    )
-    to = forms.CharField(
-        label=_("TO: (comma-separated email addresses, visible to recipients)"),
-        required=False,
-        widget=forms.Textarea(attrs={"rows": 3}),
-    )
-    bcc = forms.CharField(
-        label=_("BCC: (comma-separated email addresses, hidden from recipients)"),
-        required=False,
-        widget=forms.Textarea(attrs={"rows": 3}),
+        queryset=MailTemplate.objects.none(),  # Queryset is set dynamically in the view
+        required=True,
     )
 
-    def __init__(self, *args, event=None, **kwargs):
+    def __init__(self, *args, **kwargs):
+        event = kwargs.pop("event")
         super().__init__(*args, **kwargs)
-        if event:
-            choices = [
-                (t.pk, t.subject.get(event.locale, t.subject.get("en", "Untitled")))
-                for t in event.mail_templates.all().order_by("pk")
-            ]
-            self.fields["template"].choices = choices
+        # Dynamically populate the template choices for the specific event
+        self.fields["template"].queryset = MailTemplate.objects.filter(event=event)
