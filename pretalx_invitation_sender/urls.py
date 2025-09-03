@@ -1,11 +1,7 @@
 from django.urls import path
 
-from . import views
+from .views import InviteView
 
 urlpatterns = [
-    path(
-        "",
-        views.InvitationView.as_view(),
-        name="send",
-    )
+    path("invites/", InviteView.as_view(), name="send"),
 ]
