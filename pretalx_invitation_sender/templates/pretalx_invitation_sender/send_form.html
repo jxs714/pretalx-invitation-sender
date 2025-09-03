@@ -1,0 +1,25 @@
+{% extends "orga/base.html" %}
+{% load i18n %}
+{% load bootstrap4 %}
+
+{% block content %}
+    <h2>{% translate "Send Submission Invitations" %}</h2>
+    <p>
+        {% blocktranslate trimmed %}
+        This form allows you to send an invitation email to people who do not have an account in pretalx yet.
+        Select an email template, and enter the email addresses you want to invite, separated by commas or new lines.
+        The emails will be placed in the outbox for you to review and send.
+        {% endblocktranslate %}
+    </p>
+
+    <form method="post">
+        {% csrf_token %}
+        {% bootstrap_form form layout='horizontal' %}
+        <div class="submit-group">
+            <button type="submit" class="btn btn-primary">
+                <i class="fa fa-paper-plane"></i>
+                {% translate "Create Emails" %}
+            </button>
+        </div>
+    </form>
+{% endblock %}
