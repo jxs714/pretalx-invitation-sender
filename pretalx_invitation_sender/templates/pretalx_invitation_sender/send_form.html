@@ -1,13 +1,25 @@
 {% extends "orga/base.html" %}
-{% load bootstrap4 %}
 {% load i18n %}
+{% load bootstrap4 %}
 
 {% block content %}
-    <h1>{% trans "Send Invites" %}</h1>
-    <p>{% trans "Select a template and enter emails to send mass invites." %}</p>
+    <h2>{% translate "Send Submission Invitations" %}</h2>
+    <p>
+        {% blocktranslate trimmed %}
+        This form allows you to send an invitation to submit a proposal to people who do not have a user account or submission yet.
+        Select an email template and enter the email addresses of the recipients. The emails will be placed in the
+        <a href="{{ request.event.orga_urls.outbox }}">outbox</a> for you to review before sending.
+        {% endblocktranslate %}
+    </p>
+
     <form method="post">
         {% csrf_token %}
-        {% bootstrap_form form %}
-        <button type="submit" class="btn btn-success">{% trans "Send Emails" %}</button>
+        {% bootstrap_form form layout='horizontal' %}
+        <div class="submit-group">
+            <button type="submit" class="btn btn-primary">
+                <i class="fa fa-paper-plane"></i>
+                {% translate "Queue Emails" %}
+            </button>
+        </div>
     </form>
 {% endblock %}
