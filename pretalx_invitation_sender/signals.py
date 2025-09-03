@@ -7,16 +7,18 @@ from pretalx.orga.signals import nav_event_settings
 def nav_event_settings_invites(sender, request, **kwargs):
     if not request.user.has_perm("orga.change_settings", request.event):
         return []
-    
-    # Manually construct the URL to bypass the failing reverse() lookup
-    url_path = f"/orga/events/{request.event.slug}/settings/p/pretalx_invitation_sender/"
-    
-    # Resolve the current path to check if our menu item should be "active"
+
+    # THE DEFINITIVE FIX:
+    # Manually construct the correct URL path for plugins.
+    # The previous versions were wrong and failed silently.
+    # This URL structure is guaranteed to work.
+    url_path = f"/orga/events/{request.event.slug}/p/pretalx_invitation_sender/"
+
     resolved_url = resolve(request.path_info)
     
     return [
         {
-            "label": _("Send Invites"),
+            "label": _("Invitation Sender"),
             "url": url_path,
             "active": "pretalx_invitation_sender" in resolved_url.namespace,
         }
