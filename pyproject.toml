@@ -11,13 +11,12 @@ authors = [
 description = "A plugin to send talk submission invitations to external users."
 readme = "README.md"
 requires-python = ">=3.7"
-license = { text="Apache License 2.0" }
+license = { text = "Apache-2.0" }
 classifiers = [
     "Programming Language :: Python :: 3",
     "Framework :: Django",
     "Intended Audience :: Developers",
-    "License :: OSI Approved :: Apache Software License",
 ]
 
 [project.entry-points."pretalx.plugin"]
-pretalx_invitation_sender = "pretalx_invitation_sender:PretalxPluginMeta"
+pretalx_invitation_sender = "pretalx_invitation_sender.apps:PretalxPluginMeta"
