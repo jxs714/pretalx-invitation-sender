@@ -1,11 +1,12 @@
 from django.urls import path
+from .views import InvitationView
 
-from . import views
+app_name = "pretalx_invitation_sender"
 
 urlpatterns = [
     path(
         "",
-        views.InvitationView.as_view(),
+        InvitationView.as_view(),
         name="send",
     ),
 ]
