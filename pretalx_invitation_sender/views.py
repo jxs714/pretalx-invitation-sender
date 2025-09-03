@@ -2,10 +2,8 @@ from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.utils.translation import gettext_lazy as _
 from django.views.generic import FormView
-
 from pretalx.common.mixins.views import EventPermissionRequired
 from pretalx.mail.models import QueuedMail
-
 from .forms import InvitationForm
 
 
@@ -30,32 +28,21 @@ class InvitationView(EventPermissionRequired, FormView):
         bcc_recipients = [
             email.strip() for email in form.cleaned_data["bcc_recipients"].splitlines() if email.strip()
         ]
-
         total_sent = 0
         for email in to_recipients:
-            # Create an email for each TO recipient
             mail = QueuedMail(
-                event=self.request.event,
-                to=email,
-                bcc=", ".join(bcc_recipients),
-                reply_to=template.reply_to,
-                subject=template.subject,
-                text=template.text,
-                template=template,
+                event=self.request.event, to=email, bcc=", ".join(bcc_recipients),
+                reply_to=template.reply_to, subject=template.subject,
+                text=template.text, template=template,
             )
             mail.save()
             total_sent += 1
         
-        # If there are BCC recipients but no TO recipients, send one email
         if bcc_recipients and not to_recipients:
             mail = QueuedMail(
-                event=self.request.event,
-                to=None, # No primary recipient
-                bcc=", ".join(bcc_recipients),
-                reply_to=template.reply_to,
-                subject=template.subject,
-                text=template.text,
-                template=template,
+                event=self.request.event, to=None, bcc=", ".join(bcc_recipients),
+                reply_to=template.reply_to, subject=template.subject,
+                text=template.text, template=template,
             )
             mail.save()
             total_sent += 1
@@ -67,5 +54,4 @@ class InvitationView(EventPermissionRequired, FormView):
             )
         else:
             messages.warning(self.request, _("No email addresses were provided."))
-
         return HttpResponseRedirect(self.get_success_url())
